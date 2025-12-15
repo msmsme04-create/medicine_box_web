@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -10,32 +11,16 @@ def get_db():
 
 @app.route("/")
 def home():
+    district = request.args.get("district", "")
+    address = request.args.get("address", "")
+
     conn = get_db()
-    boxes = conn.execute("SELECT * FROM box").fetchall()
+    boxes = conn.execute("""
+        SELECT * FROM box
+        WHERE district LIKE ? AND address LIKE ?
+    """, (f"%{district}%", f"%{address}%")).fetchall()
     conn.close()
+
     return render_template("index.html", boxes=boxes)
-
-@app.route("/add", methods=["POST"])
-def add():
-    name = request.form["name"]
-    address = request.form["address"]
-
-    conn = get_db()
-    conn.execute(
-        "INSERT INTO box (name, address) VALUES (?, ?)",
-        (name, address)
-    )
-    conn.commit()
-    conn.close()
-    return redirect("/")
-
-@app.route("/delete/<int:id>")
-def delete(id):
-    conn = get_db()
-    conn.execute("DELETE FROM box WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
-    return redirect("/")
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

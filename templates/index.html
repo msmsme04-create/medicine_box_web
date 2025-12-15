@@ -20,12 +20,22 @@
 
     {% for box in boxes %}
     <li>
-        [{{ box.district }}] {{ box.name }}<br>
+        <b>[{{ box.district }}]</b> {{ box.name }}<br>
         {{ box.address }} ({{ box.detail }})<br>
 
+        <!-- 삭제 버튼 -->
         <a href="/delete/{{ box.id }}">삭제</a>
+
+        <!-- 제보 폼 -->
+        <form method="post" action="/report/{{ box.id }}">
+            <input name="content" placeholder="수거함 상태 제보">
+            <button type="submit">제보</button>
+        </form>
+
+        <hr>
     </li>
 {% endfor %}
+
 </ul>
 
 </body>

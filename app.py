@@ -24,3 +24,20 @@ def home():
     return render_template("index.html", boxes=boxes)
 if __name__ == "__main__":
     app.run()
+
+    @app.route("/add", methods=["POST"])
+def add():
+    conn = get_db()
+    conn.execute("""
+    INSERT INTO box (district, name, address, detail)
+    VALUES (?, ?, ?, ?)
+    """, (
+        request.form["district"],
+        request.form["name"],
+        request.form["address"],
+        request.form["detail"]
+    ))
+    conn.commit()
+    conn.close()
+    return redirect("/")
+

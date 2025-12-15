@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>폐의약품 수거함</title>
+</head>
+<body>
+    <h1>폐의약품 수거함 위치 서비스</h1>
+
+    <h2>수거함 목록</h2>
+    <ul>
+        {% for box in boxes %}
+            <li>
+                {{ box.name }} - {{ box.address }}
+                <a href="/delete/{{ box.id }}">삭제</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>수거함 추가</h2>
+    <form method="post" action="/add">
+        <input name="name" placeholder="수거함 이름">
+        <input name="address" placeholder="주소">
+        <button type="submit">추가</button>
+    </form>
+</body>
+</html>

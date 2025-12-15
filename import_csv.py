@@ -4,19 +4,17 @@ import csv
 conn = sqlite3.connect("medicine.db")
 cur = conn.cursor()
 
-with open("data/인천광역시_폐의약품_수거함.csv", encoding="cp949") as f:
+with open("data/폐의약품수거함.csv", encoding="cp949") as f:
     reader = csv.reader(f)
     next(reader)
 
     for row in reader:
-        name = row[0]
-        address = row[1]
-
-        cur.execute(
-            "INSERT INTO box (name, address) VALUES (?, ?)",
-            (name, address)
-        )
+        cur.execute("""
+        INSERT INTO box (csv_no, district, name, address, detail)
+        VALUES (?, ?, ?, ?, ?)
+        """, (row[0], row[1], row[2], row[3], row[4]))
 
 conn.commit()
 conn.close()
-print("CSV 데이터 저장 완료")
+
+print("CSV 저장 완료")

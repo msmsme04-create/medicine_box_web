@@ -4,7 +4,7 @@ import csv
 conn = sqlite3.connect("medicine.db")
 cur = conn.cursor()
 
-with open("data/폐의약품수거함.csv", encoding="cp949") as f:
+with open("data/data.csv", encoding="cp949") as f:
     reader = csv.reader(f)
     next(reader)
 

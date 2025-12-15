@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>폐의약품 수거함</title>
+    <title> 인천광역시 폐의약품 수거함</title>
 </head>
 <body>
 
@@ -11,7 +11,7 @@
 
 <form method="get">
     <input name="district" placeholder="관할 (예: 중구)">
-    <input name="address" placeholder="소재지">
+    <input name="address" placeholder="소재지 (도로명주소)">
     <button type="submit">검색</button>
 </form>
 
@@ -26,6 +26,8 @@
 
     
         <a href="/delete/{{ box.id }}">삭제</a>
+
+        <a href="/edit/{{ box.id }}">수정</a>
 
         
         <form method="post" action="/report/{{ box.id }}">

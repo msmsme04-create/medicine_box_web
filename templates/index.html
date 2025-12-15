@@ -8,6 +8,7 @@
 
 <h1>폐의약품 수거함 검색</h1>
 
+
 <form method="get">
     <input name="district" placeholder="관할 (예: 중구)">
     <input name="address" placeholder="소재지">
@@ -15,18 +16,18 @@
 </form>
 
 <hr>
+<h2>수거함 목록</h2>
 
 <ul>
-
-    {% for box in boxes %}
+{% for box in boxes %}
     <li>
         <b>[{{ box.district }}]</b> {{ box.name }}<br>
         {{ box.address }} ({{ box.detail }})<br>
 
-        <!-- 삭제 버튼 -->
+    
         <a href="/delete/{{ box.id }}">삭제</a>
 
-        <!-- 제보 폼 -->
+        
         <form method="post" action="/report/{{ box.id }}">
             <input name="content" placeholder="수거함 상태 제보">
             <button type="submit">제보</button>
@@ -38,10 +39,10 @@
 
 </ul>
 
-</body>
-</html>
+<hr>
 
 <h2>관리자: 수거함 추가</h2>
+
 <form method="post" action="/add">
     <input name="district" placeholder="관할">
     <input name="name" placeholder="기관명">
@@ -49,3 +50,6 @@
     <input name="detail" placeholder="세부위치">
     <button type="submit">추가</button>
 </form>
+
+</body>
+</html>

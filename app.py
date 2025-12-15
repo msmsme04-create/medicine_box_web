@@ -53,6 +53,16 @@ def delete(id):
 
     return redirect("/")
 
+@app.route("/edit/<int:id>")
+def edit(id):
+    conn = get_db()
+    box = conn.execute(
+        "SELECT * FROM box WHERE id = ?", (id,)
+    ).fetchone()
+    conn.close()
+
+    return render_template("edit.html", box=box)
+
 @app.route("/report/<int:box_id>", methods=["POST"])
 def report(box_id):
     content = request.form["content"]

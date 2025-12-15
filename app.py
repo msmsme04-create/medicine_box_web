@@ -53,6 +53,21 @@ def delete(id):
 
     return redirect("/")
 
+@app.route("/update/<int:id>", methods=["POST"])
+def update(id):
+    new_detail = request.form["detail"]
+
+    conn = get_db()
+    conn.execute("""
+        UPDATE box
+        SET detail = ?
+        WHERE id = ?
+    """, (new_detail, id))
+    conn.commit()
+    conn.close()
+
+    return redirect("/")
+
 @app.route("/edit/<int:id>")
 def edit(id):
     conn = get_db()

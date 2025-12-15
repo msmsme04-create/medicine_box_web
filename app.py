@@ -4,10 +4,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+
 def get_db():
     conn = sqlite3.connect("medicine.db")
     conn.row_factory = sqlite3.Row
     return conn
+
 
 @app.route("/")
 def home():
@@ -22,22 +24,48 @@ def home():
     conn.close()
 
     return render_template("index.html", boxes=boxes)
-if __name__ == "__main__":
-    app.run()
 
-    @app.route("/add", methods=["POST"])
+
+@app.route("/add", methods=["POST"])
 def add():
+    district = request.form["district"]
+    name = request.form["name"]
+    address = request.form["address"]
+    detail = request.form["detail"]
+
     conn = get_db()
     conn.execute("""
-    INSERT INTO box (district, name, address, detail)
-    VALUES (?, ?, ?, ?)
-    """, (
-        request.form["district"],
-        request.form["name"],
-        request.form["address"],
-        request.form["detail"]
-    ))
+        INSERT INTO box (district, name, address, detail)
+        VALUES (?, ?, ?, ?)
+    """, (district, name, address, detail))
     conn.commit()
     conn.close()
+
     return redirect("/")
 
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    conn = get_db()
+    conn.execute("DELETE FROM box WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect("/")
+
+@app.route("/report/<int:box_id>", methods=["POST"])
+def report(box_id):
+    content = request.form["content"]
+
+    conn = get_db()
+    conn.execute("""
+        INSERT INTO report (box_id, content, created_at)
+        VALUES (?, ?, ?)
+    """, (box_id, content, datetime.now()))
+    conn.commit()
+    conn.close()
+
+    return redirect("/")
+
+if __name__ == "__main__":
+    app.run()

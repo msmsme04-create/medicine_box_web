@@ -17,10 +17,13 @@
 <hr>
 
 <ul>
-{% for box in boxes %}
+
+    {% for box in boxes %}
     <li>
         [{{ box.district }}] {{ box.name }}<br>
-        {{ box.address }} ({{ box.detail }})
+        {{ box.address }} ({{ box.detail }})<br>
+
+        <a href="/delete/{{ box.id }}">삭제</a>
     </li>
 {% endfor %}
 </ul>

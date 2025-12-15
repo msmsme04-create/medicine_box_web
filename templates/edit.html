@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>수거함 정보 수정</title>
+</head>
+<body>
+
+<h1>수거함 세부위치 수정</h1>
+
+<p>
+<b>{{ box.name }}</b><br>
+{{ box.address }}
+</p>
+
+<form method="post" action="/update/{{ box.id }}">
+    <input name="detail" value="{{ box.detail }}">
+    <button type="submit">저장</button>
+</form>
+
+<br>
+<a href="/">← 목록으로 돌아가기</a>
+
+</body>
+</html>
